@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand: pulled from the official logo, banner and rickshaw */
+  --color-sage: #6ea095;
+  --color-sage-deep: #4a7c71;
+  --color-mint: #8cb8a5;
+  --color-mint-2: #b5d6c9;
+  --color-mint-soft: #e2efe9;
+  --color-mint-wash: #f1f7f4;
+  --color-caramel: #c9a06e;
+  --color-caramel-soft: #f3e6d4;
+  --color-caramel-deep: #94683a;
+
+  /* Neutrals: ink is a soft charcoal, the page is white */
+  --color-pine: #232a28;
+  --color-pine-2: #3b4542;
+  --color-foam: #ffffff;
+  --color-milk: #f7faf8;
+
+  /* Buttons: a lighter brand mint with ink text (AA contrast) */
+  --color-btn: #a9d3c3;
+  --color-btn-hover: #92c4b1;
+
+  --font-display: var(--font-bebas), "Bebas Neue", Impact, sans-serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  overflow-x: clip;
+  background: #fff;
+  color: var(--color-pine);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: #fff;
+  overflow-x: clip;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+::selection {
+  background: var(--color-mint-2);
+  color: var(--color-pine);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-sage-deep);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 0.86;
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    height: 3rem;
+    padding-inline: 1.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition:
+      background-color 0.25s,
+      color 0.25s,
+      border-color 0.25s,
+      transform 0.2s;
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn-primary {
+    background: var(--color-btn);
+    color: var(--color-pine);
+  }
+  .btn-primary:hover {
+    background: var(--color-btn-hover);
+  }
+  .btn-ghost {
+    border: 1.5px solid color-mix(in oklab, var(--color-pine) 22%, transparent);
+    color: var(--color-pine);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-sage);
+    background: var(--color-mint-wash);
+  }
+  .btn-lg {
+    height: 3.5rem;
+  }
+}
+
+.container-x {
+  width: 100%;
+  max-width: 1360px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 48px);
+}
+
+.marquee-track {
+  animation: marquee 80s linear infinite;
+}
+.marquee-wrap:hover .marquee-track,
+.marquee-wrap:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Leaflet map, restyled to the brand */
+.ds-map.leaflet-container {
+  background: var(--color-mint-wash);
+  font-family: var(--font-sans);
+}
+/* Soften OSM tiles into the light brand palette */
+.ds-map .leaflet-tile-pane {
+  filter: grayscale(0.9) sepia(0.12) hue-rotate(110deg) saturate(1.4) brightness(1.06) contrast(0.92);
+}
+.ds-map .leaflet-control-attribution {
+  font-size: 10px;
+  background: rgb(255 255 255 / 0.8);
+}
+.ds-pin {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--color-sage);
+  border: 3px solid #fff;
+  box-shadow: 0 4px 12px rgb(35 42 40 / 0.3);
+  transition: transform 0.3s var(--ease-out-expo), background-color 0.3s;
+}
+.ds-pin.is-active {
+  transform: scale(1.6);
+  background: var(--color-caramel);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
