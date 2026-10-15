@@ -1,0 +1,5 @@
+assets-src
+shots
+.playwright-mcp
+node_modules
+.next
